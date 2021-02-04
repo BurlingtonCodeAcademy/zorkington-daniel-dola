@@ -22,7 +22,7 @@ class Rooms {
     door = false,
     secretDoor = false,
     fakeDoor = "fake door",
-    doorLock = "reading spell",
+    doorLock = "reading spell"
   ) {
     //Room Setup
     this.item = item;
@@ -122,3 +122,4 @@ async function start() {
 
 //Call to Begin the Program
 start();
+
