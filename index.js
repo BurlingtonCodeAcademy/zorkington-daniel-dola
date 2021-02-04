@@ -14,6 +14,7 @@ function ask(questionText) {
 //Room Template
 class Rooms {
   constructor(
+    //Room One
     roomDescription = "in front of cave",
     item = "staff",
     nextRoom = "narrow passage",
@@ -23,6 +24,7 @@ class Rooms {
     fakeDoor = "fake door",
     doorLock = "reading spell",
   ) {
+    //Room Setup
     this.item = item;
     this.roomDescription = roomDescription;
     this.nextRoom = nextRoom;
@@ -32,16 +34,34 @@ class Rooms {
     this.fakeDoor = fakeDoor;
     this.doorLock = doorLock;
   }
+  //Gives Interaction Option
   examine() {
     return;
   }
+  //Facilitates Room Change
   travel() {
     return;
   }
+  //Room Two
   narrowPassage() {
     return;
   }
-  
+  //Room Three
+  treasureRoom() {
+    return;
+  }
+  //Room Four
+  graveRoom() {
+    return; 
+  }
+  //Room Five
+  armory() {
+    return;
+  }
+  //Room Six
+  throneRoom() {
+    return;
+  }
 }
 
 //Room One
@@ -80,6 +100,10 @@ async function start() {
       enough to slay the dragon! Go forth and fulfill your destiny!"`;
   //Player Prompts Game Start
   let characterAction = await ask(welcomeMessage);
+  
+  if (characterAction !== ) {
+
+  } 
   //Room One
 
   //Room Two
