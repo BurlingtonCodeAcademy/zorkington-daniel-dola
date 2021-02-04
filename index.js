@@ -34,53 +34,67 @@ class Rooms {
     this.fakeDoor = fakeDoor;
     this.doorLock = doorLock;
   }
-  //Gives Interaction Option
-  examine() {
-    return;
-  }
-  //Facilitates Room Change
-  travel() {
-    return;
-  }
-  //Room Two
-  narrowPassage() {
-    return;
-  }
-  //Room Three
-  treasureRoom() {
-    return;
-  }
-  //Room Four
-  graveRoom() {
-    return; 
-  }
-  //Room Five
-  armory() {
-    return;
-  }
-  //Room Six
-  throneRoom() {
-    return;
-  }
+    // Method to convert the current room to the 1st room 'Cave Entrance'
+    firstRoom() {
+    currentRoom = new Rooms();
+    }
+    // Method to convert the current room to the 2nd room 'Narrow Passage'
+    narrowPassage() {
+      this.name = `Narrow Passage`;
+      this.nextRoom = `Treasure Room`;
+      this.roomDescription = `Dark Room`;
+      this.door = false;
+      this.doorLock = `crawl`;
+    }
+    // Method to convert the current room to the 3rd room 'Treasure Room';
+    treasureRoom(){
+        this.name = `Treasure Room`;
+        this.nextRoom = `Graveyard Room`;
+        this.roomDescription = `Treasure room where the key is`;
+        this.door = true;
+        this.item = `key`;
+    }
+    // Method to convert the current room to the 4th room 'Graveyard Room';
+    graveyardRoom(){
+      this.item = `Sword of Truth`;
+      this.name = `Graveyard`;
+      this.nextRoom = `Throne Room`
+      this.roomDescription = `Room filled with bones and a magical sword`;
+      this.door = true;
+      this.secretDoor = false
+      this.fakeDoor = false;
+      this.doorLock = `key`;
+    }
+    // Method to convert the current room to the 5th room 'Ancient Armory'
+      ancientArmory(){
+      this.item = `Shield of Light`;
+      this.name = `Ancient Armory`;
+      this.nextRoom = `Graveyard`
+      this.roomDescription = `Room filled mostly with old useless weapons`;
+      this.door = true;
+    }
+    // Method to convert the current room to the 6th room `Throne Room1;
+      throneRoom(){
+      this.name = `Throne Room`
+      this.nextRoom = `Graveyard Room`
+      this.roomDescription = `Elegant Throne room inhabited by an evil dragon!`
+      this.door = true;
+    }
+  
 }
 
-//Room One
 
-//Room Two
-
-//Room Three
-
-//Room Four
-
-//Room Five
-
-//Room Six
-
-//Character Template
-class Character {
-  constructor(inventory = "torch", status = "normal") {
+//Player Template
+class Player {
+  constructor(playerInventory = "torch", status = "normal") {
+    this.name;
+    this.currentRoom;
     this.inventory = inventory;
     this.status = status;
+    
+  }
+  inventory(){
+  return;
   }
   equip() {
     return;
@@ -92,29 +106,100 @@ class Character {
 
 //Main Game Sequence
 async function start() {
-  //Game Introduction
+
+  //First Description
   const welcomeMessage = `After a long journey you finally arrive at the dungeon.
       With the fatigue of many miles and the wizard who summoned you, you stand in front of
       ominous door that leads you to the great beast that has been plaguing the countryside.\n
       The Wizard: "You are the chosen one, the ONLY one who can wield the power great
-      enough to slay the dragon! Go forth and fulfill your destiny!"`;
-  //Player Prompts Game Start
+      enough to slay the dragon! Hold my staff to reveal the password sigils, speak the words 
+      and enter the cavern to fulfill your destiny!"`;
+  //Player must 'speak the words and enter' or 'examine'
   let characterAction = await ask(welcomeMessage);
+
+  //If player does not type proper input, give them a hint
+
+  //If player inputs 'speak the words and enter', change the room
+
+  //If player inputs 'examine', describe the room more
+
+  //If player inputs 'look in my backpack', describe your inventory
   
-  if (characterAction !== ) {
+  
+  
+  //Second Room Description 
 
-  } 
-  //Room One
+  //Player must 'travel forward' or 'examine'
+  
+  //If player does not type proper input, give them a hint
 
-  //Room Two
+  //If player inputs 'travel forward', change the room
 
-  //Room Three
+  //If player inputs 'examine', describe the room more
 
-  //Room Four
+  //If player inputs 'look in my backpack', describe your inventory
 
-  //Room Five
 
-  //Room Six
+
+  //Third Room Description
+
+  //Player must 'travel forward' or 'pick up the key' or 'examine' 
+  
+  //If player does not type proper input, give them a hint
+
+  //If player inputs 'travel forward', change the room
+
+  //If player inputs 'examine', describe the room more
+
+  //If player inputs 'look in my backpack', describe your inventory
+  
+
+
+  //Fourth Room Description
+
+  //Player must 'travel forward' or 'use the key' or 'pick up the sword'
+  
+  //If player does not type proper input, give them a hint
+
+  //If player inputs 'open door in front on you', change the room to throne room
+
+  //If player inputs 'open door to the left', change the room to ancient armory
+
+  //If player inputs 'open door to the right', indicate fake door 
+  
+  //If player inputs 'examine', describe the room more
+
+  //If player inputs 'look in my backpack', describe your inventory
+
+
+
+  //Fifth Room Description
+
+  //Player must 'travel forward' or 'pick up the shield' or 'examine' or 'drop torch'
+  
+  //If player does not type proper input, give them a hint
+  
+  //If player inputs 'travel forward', change the room
+
+  //If player inputs 'examine', describe the room more
+  
+  //If player inputs 'look in my backpack', describe your inventory
+
+
+
+  //Sixth Room Description
+
+  //Player must 'slay the dragon' or 'run away' or 'examine'
+  
+  //If player does not type proper input, give them a hint
+
+  //If player inputs 'travel forward', change the room
+
+  //If player inputs 'examine', describe the room more
+  
+  //If player inputs 'look in my backpack', describe your inventory
+
+
 
   //Victory, Defeat or Exit
   process.exit();
