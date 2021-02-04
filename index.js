@@ -32,6 +32,7 @@ class Rooms {
     this.fakeDoor = fakeDoor;
     this.doorLock = doorLock;
   }
+
   examine() {
     return;
   }
@@ -43,29 +44,24 @@ class Rooms {
   }
 }
 
-//Room One
-
-//Room Two
-
-//Room Three
-
-//Room Four
-
-//Room Five
-
-//Room Six
-
-//Character Template
-class Character {
-  constructor(inventory = "torch", status = "normal") {
-    this.inventory = inventory;
+//Player Template
+class Player {
+  constructor(playerInventory = "torch", status = "normal") {
+    this.name;
+    this.currentRoom;
+    this.playerInventory = playerInventory;
     this.status = status;
   }
+  inventory(){
+    return `You have ${this.playerInventory} on you`
+  }
   equip() {
-    return;
+    // this.playerInventory.push(thingy);
+    //return this.inventory();
   }
   drop() {
-    return;
+    // this.playerInventory.filter((item) => item != thingy);
+    // return this.inventory();
   }
 }
 
@@ -97,4 +93,3 @@ async function start() {
 
 //Call to Begin the Program
 start();
-

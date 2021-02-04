@@ -2,7 +2,7 @@ class Rooms {
   constructor(
     roomDescription = "in front of cave",
     item = "staff",
-    nextRoom = "narrow passage",
+    nextRoom = this.narrowPassage,
     name = "entrance",
     door = false,
     secretDoor = false,
@@ -25,19 +25,28 @@ class Rooms {
   // Method to convert the current room to the 2nd room 'Narrow Passage'
   narrowPassage() {
     this.name = `Narrow Passage`;
-    this.nextRoom = `Treasure Room`;
+
     this.roomDescription = `Dark Room`;
     this.door = false;
     this.doorLock = `crawl`;
+    this.nextRoom = this.treasureRoom;
   }
-  // Method to convert the current room to the 3rd room 'Treasure Room';
-  treasureRoom(){
-      this.name = `Treasure Room`;
-      this.nextRoom = `Graveyard Room`;
-      this.roomDescription = `Treasure room where the key is`;
-      this.door = true;
-      this.item = `key`;
+
+  // Method to convert the current room to the 3rd room 'Treasure Room' with the key in it;
+  treasureRoom() {
+    this.item = `key`;
+    this.name = `Treasure Room`;
+    this.nextRoom = `Graveyard Room`;
+    this.roomDescription = `Treasure room where the key is`;
+    this.door = true;
   }
+
+  // Method to convert the current room to the 4th room 'Graveyard Room' with the sowrd in it;
+  graveyardRoom() {
+    // on Dan's file
+  }
+  // throne room
+  // shield room
 
   examine() {
     return;
@@ -48,9 +57,17 @@ class Rooms {
 }
 
 let currentRoom = new Rooms();
-console.log(currentRoom);
+//console.log(currentRoom);
+console.log(currentRoom.roomDescription)
 
-currentRoom.narrowPassage();
+currentRoom.nextRoom();
+//currentRoom.narrowPassage();
 // let status = currentRoom.name;
 // console.log(status);
-console.log(currentRoom);
+//console.log(currentRoom);
+console.log(currentRoom.roomDescription)
+
+currentRoom.nextRoom();
+
+//console.log(currentRoom);
+console.log(currentRoom.roomDescription)
