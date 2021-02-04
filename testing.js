@@ -45,8 +45,32 @@ class Rooms {
   graveyardRoom() {
     // on Dan's file
   }
-  // throne room
-  // shield room
+  // Method to convert the current room to the 4th room 'Graveyard Room';
+  graveyardRoom(){
+    this.item = `Sword of Truth`;
+    this.name = `Graveyard`;
+    this.nextRoom = 
+    this.roomDescription = `Room filled with bones and a magical sword`;
+    this.door = true;
+    this.fakeDoor = false;
+    this.doorLock = `key`;
+  }
+  // Method to convert the current room to the 5th room 'Ancient Armory'
+    ancientArmory(){
+    this.item = `Shield of Light`;
+    this.name = `Ancient Armory`;
+    this.nextRoom = 
+    this.roomDescription = `Room filled mostly with old useless weapons`;
+    this.door = true;
+  }
+  // Method to convert the current room to the 6th room `Throne Room1;
+    throneRoom(){
+    this.name = `Throne Room`
+    this.nextRoom = `Graveyard Room`
+    this.roomDescription = `Elegant Throne room inhabited by an evil dragon!`
+    this.door = true;
+  }
+  
 
   examine() {
     return;
