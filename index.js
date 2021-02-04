@@ -21,7 +21,7 @@ class Rooms {
     door = false,
     secretDoor = false,
     fakeDoor = "fake door",
-    doorLock = "reading spell",
+    doorLock = "reading spell"
   ) {
     this.item = item;
     this.roomDescription = roomDescription;
@@ -41,7 +41,6 @@ class Rooms {
   narrowPassage() {
     return;
   }
-  
 }
 
 //Room One
@@ -98,3 +97,4 @@ async function start() {
 
 //Call to Begin the Program
 start();
+
