@@ -86,7 +86,9 @@ class Rooms {
 
 //Player Template
 class Player {
-  constructor(playerInventory = "torch", status = "normal") {
+  constructor(
+    playerInventory = "torch",
+     status = "normal") {
     this.name;
     this.currentRoom;
     this.playerInventory = playerInventory;
