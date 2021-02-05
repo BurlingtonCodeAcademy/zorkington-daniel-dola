@@ -141,7 +141,7 @@ async function start() {
   in the format of...\n  verb  +   object's Name   example: open door\nThese will be key phrases hinted at throughout the game play, good luck!\n\nPress enter when you're ready...`);
 
   //First Description
-  const welcomeMessage = `After a long journey ${playerName} finally arrives at the dungeon. With the fatigue of many miles and the wizard who summoned you, you stand in front of ominous door that leads you to the great beast that has been plaguing the countryside.\nThe Wizard: "${playerName}! You are the chosen one, the ONLY one who can wield the power great enough to slay the dragon! Hold my staff to reveal the password sigils, speak the words and enter the cavern to fulfill your destiny!"\n >_`;
+  const welcomeMessage = `After a long journey ${playerName} finally arrives at the dungeon. With the fatigue of many miles and the wizard who summoned you, you stand in front of ominous door that leads you to the great beast that has been plaguing the countryside.\nThe Wizard: "${playerName}! You are the chosen one, the ONLY one who can wield the power great enough to slay the dragon! Hold my staff to reveal the password sigils, speak the words and enter the cavern to fulfill your destiny!\n >_"`;
 
   //Player must 'speak the words and enter' or 'examine'
 
@@ -156,11 +156,9 @@ async function start() {
   console.log(object);
   console.log(verb);
   console.log(string1);
-
-  // while loop with everything inside and if for each condition
+// while loop woth everything inside and if for each condition
 while(string1.length !== 2 || verb !== "hold" || object !== "staff"){
-
-  //loop if it is no 2 word
+//loop if it is no 2 word
   while (string1.length !== 2) {
     console.log(`enter right format`);
     answer = await ask(`>_`);
@@ -185,21 +183,15 @@ while(string1.length !== 2 || verb !== "hold" || object !== "staff"){
     }
   }
   // loop for the 1st task shows the spell and if answer is read spell goes on, if not gives a hint
-  //Check with Dola, this might be 'and' instead of 'or'
   if (verb == "hold" || object == "staff") {
-    answer = await ask(`The sigils appear around the stone door and grow brighter the longer you hold the staff...\nWizard: The spell has appeared! Now ${playerName}! Cast the spell!\n>_ `)
-    }
-  
-  if (verb == "cast" && object == "spell") {
-    console.log(`The door slides open with in a slow rumble and finishes the process with a resounding BOOM!\n Wizard: The fate of the kingdom rests in your hands now ${playerName}!\nYou step inside the cave only to be engulfed by darkness...\n\n`)
-    answer = await ask(`${playerName} cannot see at all! ${playerName} looks for their torch to light...\n>_`)
+    console.log(`working`);
+    
   }
-  
-  //Narraw passage method
-  if(verb == "light" && object == "torch" ){
-    console.log(`The room blazes with illumination as the torch catches fire!\n`)
-    answer = await ask(`${playerName} looks around only and to see jagged walls in close proximity. They stretch downward making the small passage even more narrow with every inch. The only possible way to fit is to crawl on the floor...\n>_`)
-  }
+
+  //Else player does not type proper input, give them action options
+
+  //If player inputs 'take the staff', change the room
+
   //If player inputs 'examine', describe the room more
 
   //If player inputs 'look in my backpack', describe your inventory

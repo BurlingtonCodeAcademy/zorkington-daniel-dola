@@ -95,3 +95,58 @@ currentRoom.nextRoom();
 
 //console.log(currentRoom);
 console.log(currentRoom.roomDescription)
+
+
+const readline = require("readline");
+const readlineInterface = readline.createInterface(
+  process.stdin,
+  process.stdout
+);
+
+function ask(questionText) {
+  return new Promise((resolve, reject) => {
+    readlineInterface.question(questionText, resolve);
+  });
+}
+
+
+async function testing(){
+    let answer = await ask(`type in`);
+    answer= answer.split(" ")
+    let verb = answer[0].toLowerCase();
+    let object = answer[1].toLowerCase();
+    console.log(`the verb ${verb}`)
+    console.log(`the object ${object}`)
+}
+testing();
+
+
+
+
+
+
+/////Function to sanitize answer
+// let verb;
+// let object;
+// async function answerSan(answer) {
+//   let answer1 = answer;
+//   if (typeof answer1 == "string"){
+//   answer1 = answer1.split(" ");
+//   }
+//   console.log(answer1);
+//   console.log(answer1.length);
+//   while (answer1.length != 2) {
+//     console.log(answer1.length);
+//     console.log(`enter right format`);
+//     answer1 = await ask(`>_`);
+//     console.log(answer1 + "answer1");
+//     if (typeof answer1 == "string"){
+//       answer1 = answer1.split(" ");
+//     }
+//     console.log(answer1);
+//     //break;
+//   }
+//   verb = answer1[0].toLowerCase();
+//   object = answer1[1].toLowerCase();
+//   return answer1;
+// }
