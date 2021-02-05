@@ -114,7 +114,7 @@ async function start() {
 
   //Player Instructions
   await ask(`In order for ${playerName} to progress through the game you must type in the actions
-  in the format of...\n  verb  +   object's Name   example: open door\n
+  in the format of...\n  verb  +   object's name   example: open door\n
   These will be key phrases hinted at throughout the game play, good luck!
   \n\nPress enter when you're ready...`)
   
@@ -139,7 +139,7 @@ async function start() {
   
   
   
-  //Second Room Description 
+  //Second Room Description  
 
   //Player must 'travel forward' or 'examine'
   
