@@ -86,16 +86,14 @@ class Rooms {
 
 //Player Template
 class Player {
-  constructor(playerInventory = "torch", status = "normal") {
-    this.name;
+  constructor(playerName, playerInventory = "torch", status = "normal") {
+    
+    this.playerName = playerName;
     this.currentRoom;
     this.playerInventory = playerInventory;
     this.status = status;
-    
   }
-  inventory(){
-  return;
-  }
+  
   inventory(){
     return `You have ${this.playerInventory} on you`
   }
@@ -111,20 +109,29 @@ class Player {
 
 //Main Game Sequence
 async function start() {
+  //Establish Character Name
+  playerName = await ask (`What is your character's name?`);
 
+  //Player Instructions
+  await ask(`In order for ${playerName} to progress through the game you must type in the actions
+  in the format of...\n  verb  +   object's Name   example: open door\n
+  These will be key phrases hinted at throughout the game play, good luck!
+  \n\nPress enter when you're ready...`)
+  
   //First Description
-  const welcomeMessage = `After a long journey you finally arrive at the dungeon.
+  const welcomeMessage = `After a long journey ${playerName} finally arrives at the dungeon.
       With the fatigue of many miles and the wizard who summoned you, you stand in front of
       ominous door that leads you to the great beast that has been plaguing the countryside.\n
-      The Wizard: "You are the chosen one, the ONLY one who can wield the power great
-      enough to slay the dragon! Hold my staff to reveal the password sigils, speak the words 
+      The Wizard: "${playerName}! You are the chosen one, the ONLY one who can wield the power 
+      great enough to slay the dragon! Hold my staff to reveal the password sigils, speak the words 
       and enter the cavern to fulfill your destiny!"`;
+  
   //Player must 'speak the words and enter' or 'examine'
-  let characterAction = await ask(welcomeMessage);
+  let playerAction = await ask(welcomeMessage);
 
-  //If player does not type proper input, give them a hint
+  //Else player does not type proper input, give them action options 
 
-  //If player inputs 'speak the words and enter', change the room
+  //If player inputs 'take the staff', change the room
 
   //If player inputs 'examine', describe the room more
 
