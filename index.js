@@ -146,7 +146,7 @@ async function start() {
   );
 
   //First Description
-  const welcomeMessage = `After a long journey ${playerName} finally arrives at the dungeon. With the fatigue of many miles and the wizard who summoned you, you stand in front of ominous door that leads you to the great beast that has been plaguing the countryside.\nThe Wizard: "${playerName}! You are the chosen one, the ONLY one who can wield the power great enough to slay the dragon! Hold my staff to reveal the password sigils, speak the words and enter the cavern to fulfill your destiny!"\n >_`;
+  const welcomeMessage = `After a long journey ${playerName} finally arrives at the dungeon. With the fatigue of many miles and the wizard who summoned a hero, ${playerName} stands in front of ominous stone door etched into the face of the mountain. It is an fitting that it leads to the great beast that has been plaguing the countryside.\nThe Wizard: "${playerName}! You are the chosen one, the ONLY one who can wield the power great enough to slay the dragon! Hold my staff to reveal the password sigils, speak the words and enter the cavern to fulfill your destiny!"\n >_`;
 
   //Player must 'speak the words and enter' or 'examine'
 
@@ -281,7 +281,15 @@ async function start() {
     answer = await ask(
       `${playerName} looks around only and to see jagged walls in close proximity. They stretch downward making the small passage even more narrow with every inch. The only possible way to fit is to crawl on the floor...\n>_`
     );
-  }
+  
+  /////// 
+  //dan's code
+  //Narrow passage method
+  // if(verb == "light" && object == "torch" && player.Inventory.includes('torch')){
+  //   console.log(`The room blazes with illumination as the torch catches fire!\n`)
+  //   answer = await ask(`${playerName} looks around only and to see jagged walls in close proximity. They stretch downward making the small passage even more narrow with every inch. The only possible way to fit is to crawl on the floor...\n>_`)
+  // }
+  //////////////
   //Treasure Room method
   if (verb == "crawl" && object == "floor") {
     console.log(

@@ -26,7 +26,6 @@ class Rooms {
   // Method to convert the current room to the 2nd room 'Narrow Passage'
   narrowPassage() {
     this.name = `Narrow Passage`;
-
     this.roomDescription = `Dark Room`;
     this.door = false;
     this.doorLock = `crawl`;
@@ -49,8 +48,13 @@ class Rooms {
   // Method to convert the current room to the 4th room 'Graveyard Room';
   graveyardRoom(){
     this.item = `Sword of Truth`;
+<<<<<<< HEAD
     this.name = `Graveyard`;
     this.nextRoom = this.throneRoom;
+=======
+    this.name = `Ancient Armory`;
+    this.nextRoom = 
+>>>>>>> ee21ac1acb5c44d18a300a100473b2f2855d1b79
     this.roomDescription = `Room filled with bones and a magical sword`;
     this.door = true;
     this.fakeDoor = false;
@@ -60,7 +64,7 @@ class Rooms {
     ancientArmory(){
     this.item = `Shield of Light`;
     this.name = `Ancient Armory`;
-    this.nextRoom = 
+    this.nextRoom = ``
     this.roomDescription = `Room filled mostly with old useless weapons`;
     this.door = true;
   }
