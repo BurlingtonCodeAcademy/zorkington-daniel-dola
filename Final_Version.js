@@ -16,7 +16,7 @@ class Rooms {
   constructor(
     //Room One
     roomDescription = "in front of cave",
-    item = "staff",
+    item = [],
     nextRoom = this.narrowPassage,
     name = "entrance",
     door = false,
@@ -48,7 +48,7 @@ class Rooms {
   }
   // Method to convert the current room to the 3rd room 'Treasure Room';
   treasureRoom() {
-    this.name = `Treasure Room`;
+    this.name = [`Treasure Room`];
     this.nextRoom = this.graveyardRoom;
     this.roomDescription = `Treasure room where the key is`;
     //this.door = true;
@@ -56,7 +56,7 @@ class Rooms {
   }
   // Method to convert the current room to the 4th room 'Graveyard Room';
   graveyardRoom() {
-    this.item = `Sword of Truth`;
+    this.item = [`Sword of Truth`];
     this.name = `Graveyard`;
     this.nextRoom = this.throneRoom;
     this.roomDescription = `Room filled with bones and a magical sword`;
@@ -67,7 +67,7 @@ class Rooms {
   }
   // Method to convert the current room to the 5th room 'Ancient Armory'
   ancientArmory() {
-    this.item = `Shield of Light`;
+    this.item = [`Shield of Light`];
     this.name = `Ancient Armory`;
     this.nextRoom = this.graveyardRoom;
     this.roomDescription = `Room filled mostly with old useless weapons`;
@@ -80,8 +80,10 @@ class Rooms {
     this.roomDescription = `Elegant Throne room inhabited by an evil dragon!`;
     //this.door = true;
   }
+  displayDiscription() {
+    return this.roomDescription;
+  }
 }
-
 //Player Template
 class Player {
   constructor(playerName, playerInventory = ["torch"], status = "normal") {
@@ -98,23 +100,22 @@ class Player {
     this.playerInventory.push(item);
   }
   drop(item) {
-    let newArr =[]
-    console.log(this.playerInventory)
-    this.playerInventory.forEach(element => {
-      if (element!= item){
-        newArr.push(element)
+    let newArr = [];
+    console.log(this.playerInventory);
+    this.playerInventory.forEach((element) => {
+      if (element != item) {
+        newArr.push(element);
       }
     });
-   // this.playerInventory = this.playerInventory.filter(item != 'torch')
-  //  let num = this.playerInventory.indexOf(item);
-  //  console.log(num)
-  //  let end = num++
-  this.playerInventory = newArr
-   console.log(this.playerInventory)
-   
+    // this.playerInventory = this.playerInventory.filter(item != 'torch')
+    //  let num = this.playerInventory.indexOf(item);
+    //  console.log(num)
+    //  let end = num++
+    this.playerInventory = newArr;
+    console.log(this.playerInventory);
+
     //return this.inventory();
   }
-  
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -178,7 +179,7 @@ async function start() {
   //Establish Objects
   let player = new Player();
   let currentRoom = new Rooms();
-
+  //console.log(currentRoom.displayDiscription())
   //Establish Character Name
   playerName = await ask(`What is your character's name?`);
 
@@ -279,10 +280,18 @@ async function start() {
   //Graveyard Room method without key
   if (answer.includes("open door")) {
     answer = await ask(
-      `This chamber is naught but an unsanctioned graveyard littered by piles bones without headstones or burials.\n As ${playerName} takes each step the ground makes an audible "CRRUUUNNCH!".\nThere is a single plain door on each wall providing four directions to travel, forward, right, left and backward.\n${playerName} couldn't help but notice a small glint amidst the mounds of skeletons, perhaps it should be examined...>_`
+      `This chamber is naught but an unsanctioned graveyard littered by piles bones without headstones or burials.\n As ${playerName} takes each step the ground makes an audible "CRRUUUNNCH!".\nThere is a single plain door on each wall providing four directions to travel, forward, right, left and backward.\n${playerName} couldn't help but notice a sword amidst the mounds of skeletons, perhaps it should take it...>_`
     );
   }
-
+  while (!answer.includes("take sword")) {
+    answer = await ask(
+      `It's not safe to go without a weapon, How would you slay the monster!\n>_`
+    );
+  }
+  if (answer.includes("take sword")) {
+    player.equip("sword");
+    answer = await ask(player.inventory());
+  }
   while (
     !answer.includes("travel left") &&
     !answer.includes("travel right") &&
@@ -311,81 +320,86 @@ async function start() {
     );
   }
 
-  while (!answer.includes("travel back") && !answer.includes("take shield") && !player.playerInventory.includes('shield')) {
+  while (
+    !answer.includes("travel back") &&
+    !answer.includes("take shield") &&
+    !player.playerInventory.includes("shield")
+  ) {
     answer = await ask(
       `${playerName} looks around and sees the only way out is the door ${playerName} came through. ${playerName} thinks that shield looks powerful...\n>_`
     );
   }
 
-  if (answer.includes("take shield")&& !player.playerInventory.includes("shield")) {
-    while(player.playerInventory.includes('torch')){
-        answer = await ask(`${playerName} you have to much stuff in your hand drop something`)
-        if (answer.includes("drop torch")){
-          //console.log(player.playerInventory)
-           player.drop("torch");
-            //console.log(playerInventory())
-            answer = await ask(`${playerName} you can now pick up the sheild.`)
-        }
+  if (answer.includes("shield") && !player.playerInventory.includes("shield")) {
+    //////
+    /////
+    while (player.playerInventory.includes("torch")) {
+      answer = await ask(
+        `${playerName} you have to much stuff in your hand drop something`
+      );
+      if (answer.includes("drop torch")) {
+        player.drop("torch");
+        //player.drop("key");
+        //console.log(player.inventory())
+        answer = await ask(`${playerName} you can now pick up the sheild.`);
+      }
+    }
+    if (answer.includes("take shield")) {
+      player.equip("shield");
+      answer = await ask(player.inventory());
     }
     answer = await ask(
-      `The shield glows brighter and BRIGHTER the closer that ${playerName} with each step towards it.\nNow ${playerName} must travel backward to the graveyard room as the new found light sources reveals the armory as a dead-end.\n>_`
+      `The shield glows brighter and BRIGHTER the closer that ${playerName} with each step towards it.\n${playerName} looks around and sees the only way out is the door ${playerName} came through.\n>_`
     );
   }
-  
 
-  while (answer !== "travel backward") {
+  while (!answer.includes("travel backward")) {
     answer = await ask(
-      `${playerName} looks around and sees the only way out is the door ${playerName} came through`
+      `${playerName} Can only travel backward to the graveyard room as the new found light sources reveals the armory as a dead-end.\n>_`
     );
   }
 
-  if (answer === "travel backward") {
+  if (answer.includes("travel backward")) {
     answer = await ask(
-      `This chamber is naught but an unsanctioned graveyard littered by piles bones without headstones or burials.\n As ${playerName} takes each step the ground makes an audible "CRRUUUNNCH!".\nThere is a single plain door on each wall providing four directions to travel, forward, right, left and backwards\n${playerName} couldn't help but notice a small glint amidst the mounds of skeletons, perhaps it should be examined...>_`
+      `On the way out the room collapsed, This chamber is naught but an unsanctioned graveyard littered by piles bones without headstones or burials.\n As ${playerName} takes each step the ground makes an audible "CRRUUUNNCH!".\nThere is a single plain door on each wall providing four directions to travel, forward, right, left and backwards\n${playerName} couldn't help but notice a small glint amidst the mounds of skeletons, perhaps it should be examined...>_`
     );
   }
 
-  while (
-    answer !== "travel left" ||
-    answer !== "travel forward" ||
-    answer !== "travel backward"
-  ) {
+  while (!answer.includes("travel forward")) {
     answer = await ask(
-      `The only way ${playerName}can progress is to travel forward, travel right, travel left or travel back!`
+      `The only way ${playerName} can progress now is to travel forward!`
     );
   }
-
-  // if (answer === "travel right") {
-  //   //False Door
-  //   answer = await ask(
-  //     `Once the door is fully open ${playerName} sees nothing but a wall immediately behind it, how strange...\n>_`
-  //   );
-  // }
 
   //Throne Room
   if (
-    answer == "travel forward" &&
-    player.playerStash.includes("Sword of Truth") &&
-    player.playerStash.includes("Shield of Light")
+    answer.includes("travel forward") &&
+    player.playerInventory.includes("sword") &&
+    player.playerInventory.includes("shield")
   ) {
     answer = await ask(
       `${playerName} walks down an ornate hallway that leads to an even grander throne room.\nThe expanse of the chamber is captivating but a thundering crash and deafening roar knocks ${playerName} on their back!\nA towering dragon is looming over you with the contrast of a menacing grin and the majesty of it's natural prowess.\nThe Dragon: "You must be the chosen one!!! Even with the weapons of the "chosen" you cannot defeat me! I claimed these ruins long ago, soon I will claim your kingdom too, but first I will take your life!\nWith sword and shield in hand the only choice ${playerName} has is the slay the dragon, once and for all!\n>_`
     );
+    if(!answer.includes('slay dragon')){
+      answer =await ask(`the dragon Takes a step forward...`)
+    }
+    if (answer.includes("slay dragon")) {
+      console.log(
+        `The Dragon breathes fire down at ${playerName} as they hold up the shield in desperation!\n To ${playerName}'s surprise the flames disperse around him leaving ${playerName} unharmed.\nAs ${playerName} peered over the shield he realized the dragon was blinded by the Shield of Light!\n${playerName} seized the moment and plunged the Sword of Truth into it's dark and twisted heart!\nThe Dragon roared and crashed one last time as it fell and the floor with it.\n${playerName} returned to the kingdom as a celebrated hero for ages to come...\nThe End>_`
+      );
+      process.exit();
+    }
+    else {
+      console.log(`Defeat`)
+      process.exit();
+    }
+  } 
+  else if (answer.includes('travel forawrd') && 
+  !player.playerInventory.includes('shield')
+  ) {
+    console.log(`Defeat`)
+      process.exit();
   }
-
-  if (answer == "slay dragon") {
-    console.log(
-      `The Dragon breathes fire down at ${playerName} as they hold up the shield in desperation!\n To ${playerName}'s surprise the flames disperse around him leaving ${playerName} unharmed.\nAs ${playerName} peered over the shield he realized the dragon was blinded by the Shield of Light!\n${playerName} seized the moment and plunged the Sword of Truth into it's dark and twisted heart!\nThe Dragon roared and crashed one last time as it fell and the floor with it.\n${playerName} returned to the kingdom as a celebrated hero for ages to come...\nThe End>_`
-    );
-    process.exit();
-  } else if (answer == "travel forward") {
-    console.log(
-      `${playerName} walks down an ornate hallway that leads to an even grander throne room.\nThe expanse of the chamber is captivating but a thundering crash and deafening roar knocks ${playerName} on their back!\nA towering dragon is looming over you with the contrast of a menacing grin and the majesty of it's natural prowess.\nThe Dragon: "Pathetic creature!!! How dare you enter MY DOMAIN! I claimed these ruins long ago, soon I will claim your kingdom too but first I will take your life!\nWithout the proper means to protect yourself the Dragon tears and burns ${playerName} asunder!\nThe kingdom fell under the dark rule of the Dragon, which he rules until this very day...\n${playerName} had failed only to become join the rest of the bones in the graveyard...\nThe End>_`
-    );
-  }
-
-  //Victory, Defeat or Exit
-  process.exit();
 }
 
 //Call to Begin the Program
