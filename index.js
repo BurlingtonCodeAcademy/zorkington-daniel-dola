@@ -49,7 +49,7 @@ class Rooms {
   // Method to convert the current room to the 3rd room 'Treasure Room';
   treasureRoom() {
     this.name = `Treasure Room`;
-    this.nextRoom = this.treasureRoom;
+    this.nextRoom = this.graveyardRoom;
     this.roomDescription = `Treasure room where the key is`;
     this.door = true;
     this.item = `key`;
