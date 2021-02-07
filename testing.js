@@ -1,4 +1,4 @@
-/*
+
 class Rooms {
   constructor(
     roomDescription = "in front of cave",
@@ -50,7 +50,7 @@ class Rooms {
   graveyardRoom(){
     this.item = `Sword of Truth`;
     this.name = `Graveyard`;
-    this.nextRoom = 
+    this.nextRoom = this.throneRoom;
     this.roomDescription = `Room filled with bones and a magical sword`;
     this.door = true;
     this.fakeDoor = false;
@@ -82,10 +82,18 @@ class Rooms {
 }
 
 let currentRoom = new Rooms();
+
+
+currentRoom.nextRoom();
+if(answer ="Travel left"){
+    currentRoom.ancientArmory();
+}
+
+
+
 //console.log(currentRoom);
 console.log(currentRoom.roomDescription)
 
-currentRoom.nextRoom();
 //currentRoom.narrowPassage();
 // let status = currentRoom.name;
 // console.log(status);
@@ -192,3 +200,12 @@ console.log(
  ─────██─▀███▀─██──────
  ───▄─▀████▀████▀─▄────
  ─▀█────██▀█▀██────█▀──`)
+
+
+
+
+
+
+
+
+
