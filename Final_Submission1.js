@@ -337,34 +337,31 @@ async function start() {
         if (answer.includes("drop torch")) {
           player.drop("torch");
           
-          answer = await ask(`${playerName} you can now pick up the sheild.`);
+          answer = await ask(`${playerName} can now take the shield.`);
         }
       }
       answer = answer.toLowerCase();
       if (answer.includes("take shield")) {
         player.equip("shield");
         answer = await ask(
-          `${player.inventory()}\nThe shield glows brighter and BRIGHTER the closer that ${playerName} with each step towards it.\n${playerName} looks around and sees the only way out is the door ${playerName} came through.\n>_`
+          `${player.inventory()}\nThe shield glows brighter and BRIGHTER the closer that ${playerName} with each step towards it.\n${playerName} looks around and sees the only way out is to travel back.\n>_`
         );
       }
-      // answer = await ask(
-      //   `The shield glows brighter and BRIGHTER the closer that ${playerName} with each step towards it.\n${playerName} looks around and sees the only way out is the door ${playerName} came through.\n>_`
-      // );
     }
 //Answer Sanitization    
 answer = answer.toLowerCase();
 //Incorrect Player Input
-    while (!answer.includes("travel backward")) {
+    while (!answer.includes("travel back")) {
       answer = await ask(
-        `${playerName} Can only travel backward to the graveyard room as the new found light sources reveals the armory as a dead-end.\n>_`
+        `${playerName} Can only travel back to the graveyard room as the new found light sources reveals the armory as a dead-end.\n>_`
       );
     }
     //Answer Sanitization
     answer = answer.toLowerCase();
     //Re-Enter the Graveyard
-    if (answer.includes("travel backward")) {
+    if (answer.includes("travel back")) {
       answer = await ask(
-        `On the way out the room collapsed, This chamber is naught but an unsanctioned graveyard littered by piles bones without headstones or burials.\n As ${playerName} takes each step the ground makes an audible "CRRUUUNNCH!".\nThere is a single plain door on each wall providing four directions to travel, forward, right, left and backwards\n${playerName} couldn't help but notice a small glint amidst the mounds of skeletons, perhaps it should be examined...>_`
+        `The armory collapses behind ${playerName}!\nThis chamber is naught but an unsanctioned graveyard littered by piles bones without headstones or burials.\n As ${playerName} takes each step the ground makes an audible "CRRUUUNNCH!".\nForward is the only way to travel.\n>_`
       );
     }
     //Answer Sanitization
