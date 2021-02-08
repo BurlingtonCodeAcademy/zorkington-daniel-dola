@@ -10,7 +10,6 @@ function ask(questionText) {
     readlineInterface.question(questionText, resolve);
   });
 }
-///////////////////////////////////////////////////////////////////////////////////////////
 //Room Template
 class Rooms {
   constructor(
@@ -43,7 +42,7 @@ class Rooms {
     this.name = `Narrow Passage`;
     this.nextRoom = this.treasureRoom;
     this.roomDescription = `${playerName} looks around only and to see jagged walls in close proximity.\nThey stretch downward making the small passage even more narrow with every inch. The only possible way to fit is to crawl on the floor...\n>_`;
-    this.loot = [' ']
+    this.loot = [" "];
     // this.door = false;
     // this.doorLock = `crawl`;
   }
@@ -51,7 +50,7 @@ class Rooms {
   treasureRoom() {
     this.name = [`Treasure Room`];
     this.nextRoom = this.graveyardRoom;
-    this.roomDescription = `The narrow passage opens suddenly to a treasure room with filled with riches that tempt ${playerName} to take them.\n The only way forward is to open a sturdy looking door on the opposite side of the chamber.\n>_`;
+    this.roomDescription = `The narrow passage opens suddenly to a treasure room filled with riches that tempt ${playerName} to take them.\n The only way forward is to open a sturdy looking door on the opposite side of the chamber.\n>_`;
     //this.door = true;
     this.loot = [`key`];
   }
@@ -60,11 +59,7 @@ class Rooms {
     this.loot = [`sword`];
     this.name = `Graveyard`;
     this.nextRoom = this.throneRoom;
-    this.roomDescription = `This chamber is naught but an unsanctioned graveyard littered by piles bones without headstones or burials.\nAs ${playerName} takes each step the ground makes an audible "CRRUUUNNCH!".\nThere is a single heavy door on the left wall and an ornate archway on the opposite side of the room.\n${playerName} couldn't help but notice a small glint amidst the mounds of skeletons, upon inspection ${playerName} realizes it a sword.\nThis is no ordinary sword! It is the long lost Sword of Truth!\n>_`
-    // this.door = true;
-    // this.secretDoor = false;
-    // this.fakeDoor = false;
-    //this.doorLock = `key`;
+    this.roomDescription = `This chamber is naught but an unsanctioned graveyard littered by piles bones without headstones or burials.\nAs ${playerName} takes each step the ground makes an audible "CRRUUUNNCH!".\nThere is a single heavy door on the left wall and an ornate archway on the opposite side of the room.\n${playerName} couldn't help but notice a small glint amidst the mounds of skeletons, upon inspection ${playerName} realizes it a sword.\nThis is no ordinary sword! It is the long lost Sword of Truth!\n>_`;
   }
   // Method to convert the current room to the 5th room 'Ancient Armory'
   ancientArmory() {
@@ -79,7 +74,7 @@ class Rooms {
     this.name = `Throne Room`;
     this.nextRoom = this.firstRoom;
     this.roomDescription = `${playerName} walks down an ornate hallway that leads to an even grander throne room.\nThe expanse of the chamber is captivating but a thundering crash and deafening roar knocks ${playerName} on their back!\nA towering dragon is looming over ${playerName} with a menacing grin in contrast to it's majesty and natural prowess.\nThe Dragon: "Pathetic creature!!! How dare you enter MY DOMAIN! I claimed these ruins long ago, soon I will claim your kingdom too but first I will take your life!\nWithout the proper means to protect ${playerName} the Dragon tears and burns ${playerName} asunder!\nThe kingdom fell under the dark rule of the Dragon, which he rules until this very day...\n${playerName} had failed only to become join the rest of the bones in the graveyard...\nThe End>_`;
-    this.loot = [' '];
+    this.loot = [" "];
     //this.door = true;
   }
   //Method to Display Current Room Description
@@ -99,21 +94,21 @@ class Player {
   inventory() {
     return `You have ${this.playerInventory} on you`;
   }
-  //Player Takes Item from Room 
+  //Player Takes Item from Room
   equip(item) {
     this.playerInventory.push(item);
   }
-  //Player Drops Item in Room 
+  //Player Drops Item in Room
   drop(item) {
     let newArr = [];
-    console.log(this.playerInventory);
+    // console.log(this.playerInventory);
     this.playerInventory.forEach((element) => {
       if (element != item) {
         newArr.push(element);
       }
     });
     this.playerInventory = newArr;
-    console.log(this.playerInventory);
+    // console.log(this.playerInventory);
   }
 }
 
@@ -126,107 +121,109 @@ async function start() {
   let currentRoom = new Rooms();
   //console.log(currentRoom.displayDiscription())
   //Establish Character Name
-  playerName = await ask(`What is your character's name?\n>_`);
+  playerName = await ask(
+    `${welcomeIcon}\n\nWhat is your character's name?\n>_`
+  );
 
   //Player Instructions
-  await ask(`In order for ${playerName} to progress through the game you must type in the actions in the format of...\n  verb  +  object's name   example: open door\nThese will be key phrases hinted at throughout the game play, good luck!\n\nPress enter when you're ready...\n>_`);
+  await ask(
+    `In order for ${playerName} to progress through the game you must type in the actions in the format of...\n  verb  +  object's name   example: open door\nThese will be key phrases hinted at throughout the game play, good luck!\n\nPress enter when you're ready...\n`
+  );
 
   //First Room Description
-  let answer = await ask(
-    currentRoom.displayDescription()
-  );
-    //Answer Sanitization
-    answer = answer.toLowerCase()
-    //Entrance Puzzle Failure Loop 1
+  let answer = await ask(currentRoom.displayDescription());
+  //Answer Sanitization
+  answer = answer.toLowerCase();
+  //Entrance Puzzle Failure Loop 1
   while (!answer.includes("hold staff")) {
-    answer = answer.toLowerCase()
     //Immovable Object
     if (answer.includes("staff")) {
-      answer = await ask(`${playerName} wouldn't part an old man from his walking stick!\n>_`);
+      answer = await ask(
+        `${playerName} wouldn't part an old man from his walking stick!\n>_`
+      );
     } else {
       answer = await ask(
-        `The Wizard: "${playerName}! You must hold the staff to see the sigils!\n>_"`
+        `${wizardIcon}\nThe Wizard: "${playerName}! You must hold the staff to see the sigils!\n>_`
       );
     }
+    answer = answer.toLowerCase();
   }
   //Answer Sanitization
-  answer = answer.toLowerCase()
+  answer = answer.toLowerCase();
 
   //Dungeon Entrance Puzzle Step 1 Complete
   if (answer === "hold staff") {
     answer = await ask(
-      `The sigils appear around the stone and grow brighter the longer you hold the staff...\nWizard: The spell has appeared! Now ${playerName}! Cast the spell!\n>_ `
+      `The sigils appear around the stone and grow brighter the longer you hold the staff...\n${wizardIcon}\nWizard: The spell has appeared! Now ${playerName}! Cast the spell!\n>_ `
     );
   }
   //Answer Sanitization
-  answer = answer.toLowerCase()
+  answer = answer.toLowerCase();
   //Dungeon Entrance Puzzle Failure Loop 2
   while (!answer.includes("cast spell")) {
-    answer = answer.toLowerCase()
     answer = await ask(
-      `The Wizard: "${playerName}! You must cast the spell to open the dungeon!\n>_"`
+      `${wizardIcon}\nThe Wizard: "${playerName}! You must cast the spell to open the dungeon!\n>_"`
     );
+    answer = answer.toLowerCase();
   }
   //Answer Sanitization
-  answer = answer.toLowerCase()
+  answer = answer.toLowerCase();
   //Dungeon Entrance Puzzle Step 2 Complete
   //Narrow Passage Room Transition
   if (answer.includes("cast spell")) {
     currentRoom.narrowPassage();
     console.log(
-      `The door slides open with in a slow rumble and finishes the process with a resounding BOOM!\n Wizard: The fate of the kingdom rests in your hands now ${playerName}!\nYou step inside the cave only to be engulfed by darkness...\n>_`
+      `The door slides open with in a slow rumble and finishes the process with a resounding BOOM!\n${wizardIcon}\nWizard: The fate of the kingdom rests in your hands now ${playerName}!\nYou step inside the cave only to be engulfed by darkness...\n`
     );
     answer = await ask(
       `${playerName} cannot see at all! Check your inventory for tools you use.\n>_`
     );
   }
   //Answer Sanitization
-  answer = answer.toLowerCase()
+  answer = answer.toLowerCase();
   //Narrow Passage Failure Loop 1
   while (!answer.includes("check inventory")) {
-    answer = answer.toLowerCase()
     answer = await ask(
       `${playerName} cannot see at all! Check your inventory for tools you use.\n>_`
     );
+    answer = answer.toLowerCase();
   }
   //Answer Sanitization
-  answer = answer.toLowerCase()
+  answer = answer.toLowerCase();
   //Narrow Passage Inventory Check
   if (answer.includes("check inventory")) {
     answer = await ask(`${player.inventory()}\n>_`);
   }
   //Answer Sanitization
-  answer = answer.toLowerCase()
+  answer = answer.toLowerCase();
   //Narrow Passage Puzzle Failure Loop
   while (!answer.includes("light torch")) {
-    answer = answer.toLowerCase()
     answer = await ask(
       `${playerName} cannot see at all! ${playerName} looks for their torch to light...\n>_`
     );
+    answer = answer.toLowerCase();
   }
   //Answer Sanitization
-  answer = answer.toLowerCase()
+  answer = answer.toLowerCase();
   //Narrow Passage Puzzle Success
   if (answer.includes("light torch")) {
     console.log(
       `The room blazes with illumination as the torch catches fire!\n>_`
     );
-    answer = await ask(
-      currentRoom.displayDescription()
-    );
+    answer = await ask(currentRoom.displayDescription());
   }
   //Answer Sanitization
-  answer = answer.toLowerCase()
+  answer = answer.toLowerCase();
   //Narrow Passage Puzzle Failure Loop
   while (!answer.includes("crawl floor")) {
-    answer = answer.toLowerCase()
     answer = await ask(
       `The only way ${playerName} can progress is to crawl along the floor!\n>_`
     );
+
     answer = answer.toLowerCase();
   }
   //Answer Sanitization
-  answer = answer.toLowerCase()
+  answer = answer.toLowerCase();
   //Narrow Passage Puzzle Success
   //Treasure Room Transition
   if (answer.includes("crawl floor")) {
@@ -236,22 +233,21 @@ async function start() {
     );
     answer = await ask(currentRoom.displayDescription());
   }
-//Answer Sanitization
+  //Answer Sanitization
   answer = answer.toLowerCase();
-  //Player Adds Key to Inventory 
+  //Player Adds Key to Inventory
   while (!answer.includes("open door")) {
-    answer = answer.toLowerCase()
     if (answer.includes("take key")) {
       player.equip("key");
-      answer = await ask(player.inventory());
+      answer = await ask(`${player.inventory()}\n>_`);
     } else {
       answer = await ask(
-        `The only way ${playerName} can progress is to open the door!`
+        `The only way ${playerName} can progress is to open the door!\n>_`
       );
     }
     answer = answer.toLowerCase();
   }
-//Answer Sanitization
+  //Answer Sanitization
   answer = answer.toLowerCase();
 
   //Graveyard Room method without key
@@ -263,9 +259,8 @@ async function start() {
   answer = answer.toLowerCase();
   //Graveyard Puzzle Failure Loop
   while (!answer.includes("take sword")) {
-    answer = answer.toLowerCase()
     answer = await ask(
-      `It's not safe to go without a weapon, how would you slay the monster!\n>_`
+      `It's not safe to go without a weapon, How would you slay the monster!\n>_`
     );
     answer = answer.toLowerCase();
   }
@@ -273,7 +268,7 @@ async function start() {
   //Player Adds Sword to Inventory
   if (answer.includes("take sword")) {
     player.equip("sword");
-    answer = await ask(player.inventory());
+    answer = await ask(`${player.inventory()}\n>_`);
   }
 
   answer = answer.toLowerCase();
@@ -283,13 +278,13 @@ async function start() {
     !answer.includes("travel left") &&
     !answer.includes("travel forward")
   ) {
-    answer = answer.toLowerCase()
     answer = await ask(
       `The only way ${playerName} can progress is to travel forward, travel left!\n>_`
     );
+    answer = answer.toLowerCase();
   }
   //Answer Sanitization
-  answer = answer.toLowerCase()
+  answer = answer.toLowerCase();
   //Locked Door Failure Without the Key
   if (
     answer.includes("travel left") &&
@@ -298,9 +293,16 @@ async function start() {
     answer = await ask(
       `This door is locked, and ${playerName} doesn't have a key.\n>_`
     );
+    answer = answer.toLowerCase();
+    while (!answer.includes("travel forward")) {
+      answer = await ask(
+        `The only way ${playerName} can progress now is to travel forward!\n>_`
+      );
+      answer = answer.toLowerCase();
+    }
   }
   //Answer Sanitization
-  answer = answer.toLowerCase()
+  answer = answer.toLowerCase();
   //Locked Door Success With Key
   if (
     answer.includes("travel left") &&
@@ -315,10 +317,10 @@ async function start() {
       !answer.includes("take shield") &&
       !player.playerInventory.includes("shield")
     ) {
-      answer = answer.toLowerCase()
       answer = await ask(
-        `${playerName} looks around and sees the only way out is the door ${playerName} came through. ${playerName} thinks that shield looks powerful...\n>_`
+        `${playerName} looks around and sees the only way out is the door ${playerName} came through.\n${playerName} thinks that shield looks powerful...\n>_`
       );
+      answer = answer.toLowerCase();
     }
     //Answer Sanitization
     answer = answer.toLowerCase();
@@ -327,44 +329,49 @@ async function start() {
       answer.includes("shield") &&
       !player.playerInventory.includes("shield")
     ) {
-      
       while (player.playerInventory.includes("torch")) {
-        answer = answer.toLowerCase()
         answer = await ask(
-          `${playerName} you have to much stuff in your hand drop something`
+          `${playerName} you have too much stuff in your hand drop something\n>_`
         );
         answer = answer.toLowerCase();
         if (answer.includes("drop torch")) {
           player.drop("torch");
-          
-          answer = await ask(`${playerName} you can now pick up the sheild.`);
+          answer = await ask(
+            `${player.inventory()}\n${playerName} you can now take the shield.\n>_`
+          );
         }
+        answer = answer.toLowerCase();
       }
       answer = answer.toLowerCase();
-      if (answer.includes("take shield")) {
-        player.equip("shield");
-        answer = await ask(
-          `${player.inventory()}\nThe shield glows brighter and BRIGHTER the closer that ${playerName} with each step towards it.\n${playerName} looks around and sees the only way out is the door ${playerName} came through.\n>_`
-        );
-      }
-      // answer = await ask(
-      //   `The shield glows brighter and BRIGHTER the closer that ${playerName} with each step towards it.\n${playerName} looks around and sees the only way out is the door ${playerName} came through.\n>_`
-      // );
     }
-//Answer Sanitization    
-answer = answer.toLowerCase();
-//Incorrect Player Input
-    while (!answer.includes("travel backward")) {
+    //Answer Sanitization
+    answer = answer.toLowerCase();
+    //Incorrect Player Input
+    while (!answer.includes("travel back") && !answer.includes("take shield")) {
       answer = await ask(
-        `${playerName} Can only travel backward to the graveyard room as the new found light sources reveals the armory as a dead-end.\n>_`
+        `${playerName} Can only travel back to the graveyard room as the new and improved light sources confirms the armory as a dead-end.\n>_`
       );
+      answer = answer.toLowerCase();
+    }
+    if (answer.includes("take shield")) {
+      player.equip("shield");
+      answer = await ask(
+        `${player.inventory()}\nThe shield glows brighter and BRIGHTER the closer that ${playerName} with each step towards it.\nThis must be the fabled Shield of Light!\n${playerName} looks around and sees the only way out is travel back to the graveyard.\n>_`
+      );
+      answer = answer.toLowerCase();
+      while (!answer.includes("travel back")) {
+        answer = await ask(
+          `${playerName} Can only travel back to the graveyard room as the new and improved light sources confirms the armory as a dead-end.\n>_`
+        );
+        answer = answer.toLowerCase();
+      }
     }
     //Answer Sanitization
     answer = answer.toLowerCase();
     //Re-Enter the Graveyard
-    if (answer.includes("travel backward")) {
+    if (answer.includes("travel back")) {
       answer = await ask(
-        `On the way out the room collapsed, This chamber is naught but an unsanctioned graveyard littered by piles bones without headstones or burials.\n As ${playerName} takes each step the ground makes an audible "CRRUUUNNCH!".\nThere is a single plain door on each wall providing four directions to travel, forward, right, left and backwards\n${playerName} couldn't help but notice a small glint amidst the mounds of skeletons, perhaps it should be examined...>_`
+        `The armory collapses as ${playerName} barely makes it through the doorway!\nThis chamber is naught but an unsanctioned graveyard littered by piles bones without headstones or burials.\nAs ${playerName} takes each step the ground makes an audible "CRRUUUNNCH!".\nThe only direction to travel is forward through the ornate archway on the other side of the room.\n>_`
       );
     }
     //Answer Sanitization
@@ -372,8 +379,9 @@ answer = answer.toLowerCase();
     //Incorrect Player Input
     while (!answer.includes("travel forward")) {
       answer = await ask(
-        `The only way ${playerName} can progress now is to travel forward!`
+        `The only way ${playerName} can progress now is to travel forward!\n>_`
       );
+      answer = answer.toLowerCase();
     }
     //Answer Sanitization
     answer = answer.toLowerCase();
@@ -389,33 +397,95 @@ answer = answer.toLowerCase();
     answer = await ask(
       `${playerName} walks down an ornate hallway that leads to an even grander throne room.\nThe expanse of the chamber is captivating but a thundering crash and deafening roar knocks ${playerName} on their back!\nA towering dragon is looming over you with the contrast of a menacing grin and the majesty of it's natural prowess.\nThe Dragon: "You must be the chosen one!!! Even with the weapons of the "chosen" you cannot defeat me! I claimed these ruins long ago, soon I will claim your kingdom too, but first I will take your life!\nWith sword and shield in hand the only choice ${playerName} has is the slay the dragon, once and for all!\n>_`
     );
-    answer = answer.toLowerCase()
+    answer = answer.toLowerCase();
     //One Last Chance for the Player to Act
-    if(!answer.includes('slay dragon')){
-      answer = await ask(`The dragon lunges toward ${playerName}!`)
+    if (!answer.includes("slay dragon")) {
+      answer = await ask(`The dragon lunges toward ${playerName}!\n>_`);
     }
     //Answer Sanitization
-    answer = answer.toLowerCase()
-    //Victory Scenario  
+    answer = answer.toLowerCase();
+    //Victory Scenario
     if (answer.includes("slay dragon")) {
       console.log(
-        `The Dragon breathes fire down at ${playerName} as they hold up the shield in desperation!\n To ${playerName}'s surprise the flames disperse around him leaving ${playerName} unharmed.\nAs ${playerName} peered over the shield he realized the dragon was blinded by the Shield of Light!\n${playerName} seized the moment and plunged the Sword of Truth into it's dark and twisted heart!\nThe Dragon roared and crashed one last time as it fell and the floor with it.\n${playerName} returned to the kingdom as a celebrated hero for ages to come...\nThe End>_`
+        `${deadMonster}\nThe Dragon breathes fire down at ${playerName} as they hold up the shield in desperation!\n To ${playerName}'s surprise the flames disperse around him leaving ${playerName} unharmed.\nAs ${playerName} peered over the shield he realized the dragon was blinded by the Shield of Light!\n${playerName} seized the moment and plunged the Sword of Truth into it's dark and twisted heart!\nThe Dragon roared and crashed one last time as it fell and the floor with it.\n${playerName} returned to the kingdom as a celebrated hero for ages to come...\nThe End>_`
       );
       process.exit();
     }
     //Defeat Scenario 1
     else {
-      console.log(`${playerName} doesn't react in time!\nThe Dragon tears and burns ${playerName} asunder!\nThe kingdom fell under the dark rule of the Dragon, which he rules until this very day...\n${playerName} had failed only to join the rest of the bones in the graveyard...\nThe End>_`)
+      console.log(
+        `${playerName} doesn't react in time!\nThe Dragon tears and burns ${playerName} asunder!\nThe kingdom fell under the dark rule of the Dragon, which he rules until this very day...\n${playerName} had failed only to join the rest of the bones in the graveyard...\nThe End>_`
+      );
+      console.log(deadIcon);
       process.exit();
     }
-  } 
+  }
   //Defeat Scenario 2
-  else if (answer.includes('travel forward') && 
-  !player.playerInventory.includes('shield')
+  else if (
+    answer.includes("travel forward") &&
+    !player.playerInventory.includes("shield")
   ) {
-    console.log(`${playerName} walks down an ornate hallway that leads to an even grander throne room.\nThe expanse of the chamber is captivating but a thundering crash and deafening roar knocks ${playerName} on their back!\nA towering dragon is looming over ${playerName} with the with a menacing grin in contrast to it's majesty and natural prowess.\nThe Dragon: "Pathetic creature!!! How dare you enter MY DOMAIN! I claimed these ruins long ago, soon I will claim your kingdom too but first I will take your life!\nWithout the proper means to protect themselves, the Dragon tears and burns ${playerName} asunder!\nThe kingdom fell under the dark rule of the Dragon, which he rules until this very day...\n${playerName} had failed only to join the rest of the bones in the graveyard...\nThe End>_`)
+    console.log(
+      `${playerName} walks down an ornate hallway that leads to an even grander throne room.\nThe expanse of the chamber is captivating but a thundering crash and deafening roar knocks ${playerName} on their back!\nA towering dragon is looming over ${playerName} with the with a menacing grin in contrast to it's majesty and natural prowess.\nThe Dragon: "Pathetic creature!!! How dare you enter MY DOMAIN! I claimed these ruins long ago, soon I will claim your kingdom too but first I will take your life!\nWithout the proper means to protect themselves, the Dragon tears and burns ${playerName} asunder!\nThe kingdom fell under the dark rule of the Dragon, which he rules until this very day...\n${playerName} had failed only to join the rest of the bones in the graveyard...\nThe End>_`
+    );
+    console.log(memeIcon);
     process.exit();
   }
 }
+//// images
+let deadIcon =
+`  ▄    ▄▄▄▄▄▄▄    ▄
+ ▀▀▄ ▄█████████▄ ▄▀▀
+     ██ ▀███▀ ██     
+   ▄ ▀████▀████▀ ▄    
+ ▀█    ██▀█▀██    █▀  `;
+ let wizardIcon = 
+ ` ▒▓▒▓▒▓▒▓▒▓▒▓ ▄▀▀▀▄
+  ██▀████▀██  ▀▄▀  █
+ O▀████████▀O     █
+    ▀█▄▄█▀        █
+   ▓▒▓▒▓▒▓▒       █
+ `;
+ let deadMonster = 
+ `      ▄██████▄
+     ▄███ X █████████▄
+    ▄█████████████████▄
+  ▄█████ ▼ ▼ ▼ ▼ ▼▼▼▼▼
+ ▄███████▄ ▲ ▲▲▲▲▲▲▲▲
+ ████████████████████▀▀`;
+ let welcomeIcon =
+ ` █▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█
+ █░░╦ ╦╔╗╦ ╔╗╔╗╔╦╗╔╗░░█
+ █░░║║║╠ ║ ║ ║║║║║╠ ░░█
+ █░░╚╩╝╚╝╚╝╚╝╚╝╩ ╩╚╝░░█
+ █▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█`;
+ let memeIcon =
+ `     ▄▄▄▀▀▀▀▀▀▀▀▀▄▄▄         
+   ▄▀               ▀▀▄▄     
+  ▄▀                    ▀▄   
+ ▄▀                       █  
+ █                         █ 
+▐                           █
+█    ▀▀█▄▄▄   ▄▌            ▐
+▌     ▌ ██▀█▀▀   ▄▄▄▄▄    ▌ ▐
+▌     ▀▄▄▄▀      ▌ ▀███▄▄▀  ▐
+▌                 ▀▄▄▄▄▀   ▄▌
+▐    ▐▀                   ▄▀ 
+ █   ▌  ▄▀▀▀▄▄▄          ▄▀  
+  █  ▀    ▄▄▄▄ ▀▀▌  ▌   █    
+   ▀▄         ▀   ▄▀  ▄▀     
+     ▀▄▄▄         ▄▄▀▀       
+        ▐▀▀▀▀▀▀▀▀▀           
+        █                    
+█▀▀█ █▀▀█ █▀▀ 　 █  █ █▀▀█ █  █
+█▄▄█ █▄▄▀ █▀▀ 　 █▄▄█ █  █ █  █
+▀  ▀ ▀ ▀▀ ▀▀▀ 　 ▄▄▄█ ▀▀▀▀  ▀▀▀
+█ ▄▀ ▀█▀  █▀▀▄  █▀▀▄ ▀█▀  █▄  █  █▀▀█
+█▀▄   █   █  █  █  █  █   █ █ █  █ ▄▄
+█  █ ▄█▄  █▄▄▀  █▄▄▀ ▄█▄  █  ▀█  █▄▄█
+█▀▄▀█  █▀▀▀ ▀█
+█ █ █  █▀▀▀ █▀
+█   █  █▄▄▄ ▄ 
+`;
 //Call to Begin the Program
 start();
